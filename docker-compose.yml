@@ -1,0 +1,7 @@
+services:
+  amiibo-forge:
+    image: ghcr.io/twindragon97/amiibo-forge:latest
+    container_name: amiibo-forge
+    ports:
+      - "8080:80"
+    restart: unless-stopped

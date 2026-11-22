@@ -1,0 +1,10 @@
+# Para construir la imagen desde el código local en vez de descargarla:
+#   docker compose -f docker-compose.build.yml up -d --build
+services:
+  amiibo-forge:
+    build: .
+    image: amiibo-forge:local
+    container_name: amiibo-forge
+    ports:
+      - "8080:80"
+    restart: unless-stopped
