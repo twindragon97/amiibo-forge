@@ -73,6 +73,22 @@ docker compose -f docker-compose.build.yml up -d --build
 
 ## Cargar el amiibo en el Chameleon Ultra
 
+### Directamente por USB, desde la página
+
+La sección **Mi Chameleon** se conecta al Chameleon Ultra por USB (Web Serial) y gestiona sus 8 slots:
+
+- **Cargar aquí**: pone el slot como NTAG215, configura el UID (ATQA `00 44`, SAK `00`), escribe las 135 páginas, relee todo para comprobarlo, le pone nombre y lo guarda en la memoria del Chameleon.
+- **Activar**, **Encender / Apagar**, **Renombrar** y **Vaciar** (con confirmación).
+- **Comprobar** y **Copia .bin**: leen un slot NTAG215, verifican el UID y la contraseña, y descargan su contenido.
+
+Requisitos:
+
+- Chrome o Edge de escritorio (Firefox y Safari no tienen Web Serial).
+- Abrir la página como `http://localhost:8080` o por HTTPS. Con la IP del equipo el navegador bloquea el USB.
+- Cerrar Chameleon Ultra GUI u otros programas que usen el puerto: solo admite una conexión.
+
+### Con Chameleon Ultra GUI
+
 Con [Chameleon Ultra GUI](https://github.com/GameTec-live/ChameleonUltraGUI):
 
 1. Abre **Saved Cards** y pulsa el icono de subir archivo en la cabecera de **Cards**.

@@ -169,6 +169,47 @@ footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
   .base{max-width:340px}
 }
 @media (max-width:480px){ .steps{grid-template-columns:1fr} .field{grid-template-columns:5.5rem minmax(0,1fr)} }
+/* MI CHAMELEON */
+.device{background:var(--surface);border-radius:var(--r);box-shadow:0 0 0 1px var(--line);overflow:hidden}
+.device-bar{display:flex;flex-wrap:wrap;gap:1rem 1.5rem;align-items:center;justify-content:space-between;padding:1rem 1.1rem;border-bottom:1px solid var(--line);background:var(--sunk)}
+.conn{display:flex;align-items:center;gap:.7rem;min-width:0}
+.led{width:12px;height:12px;border-radius:50%;background:var(--muted);flex:none;box-shadow:0 0 0 4px color-mix(in srgb,var(--muted) 18%,transparent)}
+.led.on{background:var(--ok);box-shadow:0 0 0 4px color-mix(in srgb,var(--ok) 25%,transparent);animation:pulse 2s ease-in-out infinite}
+.led.busy{background:var(--patch);box-shadow:0 0 0 4px color-mix(in srgb,var(--patch) 25%,transparent)}
+@keyframes pulse{50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--ok) 10%,transparent)}}
+.conn-text b{display:block;font-weight:600}
+.conn-text span{font:400 .8rem/1.4 var(--f-mono);color:var(--muted)}
+.dev-actions{display:flex;gap:.6rem;flex-wrap:wrap}
+.pick{display:flex;align-items:center;gap:.6rem;padding:.8rem 1.1rem;border-bottom:1px solid var(--line);font-size:.9rem;flex-wrap:wrap}
+.pick .mono{color:var(--ink);font-weight:600}
+.pick .muted{color:var(--muted)}
+.slots-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.8rem;padding:1.1rem}
+.slotc{position:relative;border-radius:12px;padding:1rem;background:var(--sunk);display:grid;gap:.7rem;align-content:start;min-width:0;box-shadow:inset 0 0 0 1px var(--line)}
+.slotc.active{background:color-mix(in srgb,var(--accent) 10%,var(--surface));box-shadow:inset 0 0 0 2px var(--accent)}
+.slotc.ghost{opacity:.55}
+.slot-top{display:flex;justify-content:space-between;align-items:center;gap:.5rem}
+.slot-num{font:800 1.5rem/1 var(--f-display)}
+.slot-badge{font:600 .66rem/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;padding:.3rem .45rem;border-radius:5px;background:var(--accent);color:var(--accent-ink)}
+.slot-name{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-height:1.5em}
+.slot-type{font:400 .76rem/1.5 var(--f-mono);color:var(--muted)}
+.slot-type .on{color:var(--ok)} .slot-type .off{color:var(--muted)}
+.slot-detail{font:400 .74rem/1.5 var(--f-mono);color:var(--muted);word-break:break-all}
+.slot-btns{display:flex;flex-wrap:wrap;gap:.35rem}
+.sbtn{font:600 .76rem/1 var(--f-body);padding:.5rem .65rem;border-radius:8px;background:var(--surface);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.sbtn:hover:not(:disabled){box-shadow:inset 0 0 0 1.5px var(--accent)}
+.sbtn.load{background:var(--accent);color:var(--accent-ink);box-shadow:none}
+.sbtn.danger:hover:not(:disabled){box-shadow:inset 0 0 0 1.5px var(--danger);color:var(--danger)}
+.rename{display:flex;gap:.35rem}
+.rename input{flex:1;min-width:0;font:500 .85rem/1 var(--f-body);padding:.5rem .6rem;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.progress{height:4px;background:var(--line);border-radius:4px;overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:var(--patch);transition:width .15s}
+.log{margin:0;padding:.8rem 1.1rem;border-top:1px solid var(--line);font:400 .76rem/1.6 var(--f-mono);color:var(--muted);max-height:150px;overflow:auto;white-space:pre-wrap}
+.log .e{color:var(--danger)} .log .o{color:var(--ok)}
+.notice{padding:1rem 1.1rem;font-size:.92rem;color:var(--muted);display:grid;gap:.4rem}
+.notice b{color:var(--ink)}
+.confirm{display:grid;gap:.5rem;padding:.7rem;border-radius:8px;background:color-mix(in srgb,var(--danger) 10%,var(--surface));font-size:.82rem}
+@media (max-width:900px){ .slots-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:480px){ .slots-grid{grid-template-columns:1fr} }
 @media (prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important} }
 </style>
 </head>
@@ -179,11 +220,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
     <div>
       <p class="eyebrow">NTAG215 · 540 bytes · 135 páginas</p>
       <h1>Amiibo <span class="arrow">→</span> Chameleon<small>Prepara tus copias de amiibo para emularlas en el Chameleon Ultra.</small></h1>
-      <p class="lede">Suelta aquí tus <span class="mono">.bin</span>. La página comprueba que cada copia esté sana, calcula la contraseña que pide la consola a partir del UID y te devuelve un archivo listo para importar en Chameleon Ultra GUI.</p>
+      <p class="lede">Suelta aquí tus <span class="mono">.bin</span>. La página comprueba que cada copia esté sana, calcula la contraseña que pide la consola a partir del UID y te devuelve un archivo listo para el Chameleon Ultra. Si lo conectas por USB, lo cargas en un slot desde aquí mismo.</p>
       <div class="facts">
         <span class="fact">Acepta <b>532</b> · <b>540</b> · <b>572</b> bytes y packs</span>
         <span class="fact">Cambia solo <b>6 bytes</b></span>
         <span class="fact">Nada sale de <b>tu navegador</b></span>
+        <span class="fact">Carga directa por <b>USB</b></span>
       </div>
     </div>
     <label class="base" id="drop" for="file" tabindex="0" aria-label="Elegir o soltar archivos .bin de amiibo">
@@ -223,6 +265,30 @@ footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
           <div class="panel-head"><h3 id="insp-title">Inspector</h3><span class="count" id="insp-aid"></span></div>
           <div class="insp" id="insp"></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="chameleon">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Mi Chameleon · USB</p>
+          <h2>Tus 8 slots, desde aquí</h2>
+          <p>Conecta el Chameleon Ultra por USB y pulsa Conectar. Elige un amiibo en el banco de trabajo y pulsa <b>Cargar aquí</b> en el slot que quieras. La página escribe las 135 páginas, pone el UID correcto, comprueba lo escrito y lo guarda en la memoria del Chameleon.</p>
+        </div>
+      </div>
+      <div class="device">
+        <div class="device-bar">
+          <div class="conn"><span class="led" id="led"></span><div class="conn-text"><b id="dev-title">Sin conectar</b><span id="dev-sub">Funciona en Chrome o Edge de escritorio</span></div></div>
+          <div class="dev-actions">
+            <button class="btn-ghost" id="dev-refresh" type="button" disabled>Actualizar slots</button>
+            <button class="btn-primary" id="dev-connect" type="button">Conectar por USB</button>
+          </div>
+        </div>
+        <div class="pick" id="pick"></div>
+        <div id="dev-body"></div>
+        <pre class="log" id="log" aria-live="polite"></pre>
       </div>
     </div>
   </section>
@@ -397,7 +463,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
     });
   }
 
-  function select(i){ selected = i; [...document.querySelectorAll('.item')].forEach((el,k)=>el.setAttribute('aria-selected', k===i)); renderInsp(); }
+  function select(i){ selected = i; [...document.querySelectorAll('.item')].forEach((el,k)=>el.setAttribute('aria-selected', k===i)); renderInsp(); document.dispatchEvent(new CustomEvent('forge:select')); }
+  window.forge = { selected: () => items[selected], add: (name, bytes) => { items = items.filter(i=>!i.example); items.push(...ingest(name, bytes.buffer)); render(); select(items.length-1); }, toast, download, validate, hexs };
 
   function row(page, d, cls, oldD){
     const bytes = [...d.subarray(page*4, page*4+4)].map((b,k)=>{
@@ -477,6 +544,277 @@ footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
   $('#zip').onclick = () => { const ok=items.filter(i=>i.out&&!i.example); const list = ok.length?ok:items.filter(i=>i.out); download(zip(list.map(i=>({name:i.name,data:i.out}))), 'amiibo-chameleon.zip'); toast(`${list.length} archivo${list.length===1?'':'s'} en amiibo-chameleon.zip`); };
 
   items = [sample()]; render(); select(0);
+})();
+</script>
+
+<script>
+/* Cliente Web Serial para Chameleon Ultra.
+   Trama: SOF 0x11 | LRC1 | CMD u16 BE | STATUS u16 BE | LEN u16 BE | LRC2 | DATA | LRC3 */
+(() => {
+  const $ = s => document.querySelector(s);
+  const CMD = { APP_VERSION:1000, CHANGE_MODE:1001, GET_MODE:1002, SET_ACTIVE:1003, SET_TYPE:1004, SET_DEFAULT:1005, SET_ENABLE:1006,
+    SET_NICK:1007, GET_NICK:1008, SAVE:1009, GIT_VERSION:1017, GET_ACTIVE:1018, SLOT_INFO:1019, DEL_NICK:1021, ENABLED:1023,
+    DEL_SENSE:1024, MODEL:1033, ALL_NICKS:1038, SET_ANTICOLL:4001, GET_ANTICOLL:4018, MF0_READ:4021, MF0_WRITE:4022, MF0_PAGES:4030 };
+  const ST = { 0x00:'OK', 0x01:'Sin tag', 0x60:'Parámetro incorrecto', 0x66:'Modo de dispositivo incorrecto', 0x67:'Comando no válido', 0x68:'OK', 0x69:'No implementado', 0x70:'Fallo al escribir en flash', 0x71:'Fallo al leer de flash', 0x72:'Tipo de slot no válido' };
+  const NTAG215 = 1101, HF = 2, PAGES = 135;
+  const TYPES = { 0:'Vacío', 1001:'MIFARE Classic 1K', 1100:'NTAG213', 1101:'NTAG215', 1102:'NTAG216', 1103:'MIFARE Ultralight', 1104:'Ultralight C', 1105:'Ultralight EV1 (11)', 1106:'Ultralight EV1 (21)', 1107:'NTAG210', 1108:'NTAG212' };
+  const typeName = t => TYPES[t] || `Tipo ${t}`;
+  const enc = new TextEncoder(), dec = new TextDecoder();
+  const lrc = (a, from, to) => { let s=0; for (let i=from;i<to;i++) s=(s+a[i])&0xFF; return (0x100-s)&0xFF; };
+
+  let port=null, reader=null, rxBuf=new Uint8Array(0), waiting=null, queue=Promise.resolve(), busy=false;
+  let dev = null, slots = [], openPanel = null; // openPanel = {slot, kind:'rename'|'clear'}
+
+  function log(msg, cls=''){ const l=$('#log'); const line=document.createElement('div'); if(cls) line.className=cls; line.textContent=`${new Date().toLocaleTimeString()}  ${msg}`; l.appendChild(line); l.scrollTop=l.scrollHeight; }
+
+  function frame(cmd, data=new Uint8Array(0)){
+    const f = new Uint8Array(10 + data.length);
+    f[0]=0x11; f[1]=lrc(f,0,1); f[2]=cmd>>8; f[3]=cmd&0xFF; f[4]=0; f[5]=0; f[6]=data.length>>8; f[7]=data.length&0xFF;
+    f[8]=lrc(f,0,8); f.set(data,9); f[9+data.length]=lrc(f,0,9+data.length); return f;
+  }
+
+  function parse(){
+    while (true){
+      const s = rxBuf.indexOf(0x11);
+      if (s < 0){ rxBuf = new Uint8Array(0); return; }
+      if (s > 0) rxBuf = rxBuf.slice(s);
+      if (rxBuf.length < 9) return;
+      if (rxBuf[1] !== 0xEF || rxBuf[8] !== lrc(rxBuf,0,8)){ rxBuf = rxBuf.slice(1); continue; }
+      const len = (rxBuf[6]<<8)|rxBuf[7];
+      if (len > 4096){ rxBuf = rxBuf.slice(1); continue; }
+      if (rxBuf.length < 10+len) return;
+      const ok = rxBuf[9+len] === lrc(rxBuf,0,9+len);
+      const cmd=(rxBuf[2]<<8)|rxBuf[3], status=(rxBuf[4]<<8)|rxBuf[5], data=rxBuf.slice(9,9+len);
+      rxBuf = rxBuf.slice(10+len);
+      if (ok && waiting && waiting.cmd === cmd){ const w=waiting; waiting=null; clearTimeout(w.t); w.resolve({status,data}); }
+    }
+  }
+
+  async function readLoop(){
+    try {
+      while (port && port.readable){
+        reader = port.readable.getReader();
+        try { while (true){ const {value, done} = await reader.read(); if (done) break; const n=new Uint8Array(rxBuf.length+value.length); n.set(rxBuf); n.set(value,rxBuf.length); rxBuf=n; parse(); } }
+        finally { reader.releaseLock(); reader=null; }
+      }
+    } catch(e){ if (port) { log(`Conexión perdida: ${e.message}`, 'e'); disconnected(); } }
+  }
+
+  // Envía un comando y espera su respuesta (uno a la vez)
+  function send(cmd, data=[], {timeout=3000, allow=[]}={}){
+    const run = async () => {
+      if (!port) throw new Error('El Chameleon no está conectado');
+      const res = new Promise((resolve, reject) => { waiting = {cmd, resolve, t:setTimeout(()=>{ waiting=null; reject(new Error(`Sin respuesta al comando ${cmd}`)); }, timeout)}; });
+      const w = port.writable.getWriter(); try { await w.write(frame(cmd, Uint8Array.from(data))); } finally { w.releaseLock(); }
+      const r = await res;
+      if (r.status !== 0x68 && r.status !== 0x00 && !allow.includes(r.status)) throw new Error(`${ST[r.status]||'Error 0x'+r.status.toString(16)} (comando ${cmd})`);
+      return r;
+    };
+    const p = queue.then(run, run); queue = p.catch(()=>{}); return p;
+  }
+
+  async function connect(){
+    if (!('serial' in navigator)){ window.forge.toast('Tu navegador no permite USB. Usa Chrome o Edge de escritorio.'); return; }
+    try { port = await navigator.serial.requestPort(); }
+    catch { return; }
+    try {
+      await port.open({ baudRate:115200 });
+      try { await port.setSignals({ dataTerminalReady:true }); } catch {}
+      rxBuf = new Uint8Array(0); readLoop();
+      const v = (await send(CMD.APP_VERSION)).data;
+      let model='Chameleon'; try { model = (await send(CMD.MODEL)).data[0]===1 ? 'Chameleon Lite' : 'Chameleon Ultra'; } catch {}
+      let git=''; try { git = dec.decode((await send(CMD.GIT_VERSION)).data); } catch {}
+      dev = { model, version:`${v[0]}.${v[1]}`, git };
+      log(`Conectado: ${model}, firmware ${dev.version}${git?' ('+git+')':''}`, 'o');
+      $('#dev-connect').textContent='Desconectar';
+      await refresh();
+    } catch(e){ log(`No se pudo conectar: ${e.message}`, 'e'); window.forge.toast('No responde. ¿Es el puerto del Chameleon?'); await disconnect(); }
+  }
+
+  async function disconnect(){
+    const p = port; port = null;
+    try { if (reader) await reader.cancel(); } catch {}
+    try { if (p) await p.close(); } catch {}
+    disconnected();
+  }
+  function disconnected(){ port=null; dev=null; slots=[]; busy=false; $('#dev-connect').textContent='Conectar por USB'; render(); }
+
+  async function getNicks(){
+    try {
+      const d = (await send(CMD.ALL_NICKS)).data; const out=[]; let i=0;
+      for (let s=0;s<8;s++){ const hl=d[i++]; const hf=dec.decode(d.slice(i,i+hl)); i+=hl; const ll=d[i++]; i+=ll; out.push(hf); }
+      return out;
+    } catch {
+      const out=[]; for (let s=0;s<8;s++){ try { out.push(dec.decode((await send(CMD.GET_NICK,[s,HF],{allow:[0x71,0x60]})).data)); } catch { out.push(''); } } return out;
+    }
+  }
+
+  async function refresh(){
+    if (!port) return;
+    setBusy(true);
+    try {
+      const info=(await send(CMD.SLOT_INFO)).data, en=(await send(CMD.ENABLED)).data, act=(await send(CMD.GET_ACTIVE)).data[0];
+      const nicks = await getNicks();
+      slots = Array.from({length:8}, (_,s) => ({ hf:(info[s*4]<<8)|info[s*4+1], lf:(info[s*4+2]<<8)|info[s*4+3], hfOn:!!en[s*2], lfOn:!!en[s*2+1], nick:nicks[s]||'', active:s===act, detail:slots[s]?.detail||'' }));
+    } catch(e){ log(`Error leyendo slots: ${e.message}`, 'e'); }
+    setBusy(false);
+  }
+
+  function setBusy(b, slot=null, pct=null){ busy=b; render(slot, pct); }
+
+  function nickFor(name){ let n=name.replace(/\.bin$/i,'').trim(); while (enc.encode(n).length>32) n=n.slice(0,-1); return n || 'amiibo'; }
+
+  async function loadInto(s){
+    const it = window.forge.selected();
+    if (!it?.out){ window.forge.toast('Elige primero un amiibo válido en el banco de trabajo'); return; }
+    const data = it.out, uid = it.uid, prev = slots.find(x=>x.active);
+    setBusy(true, s, 0);
+    try {
+      log(`Slot ${s+1}: cargando ${it.name}`);
+      await send(CMD.CHANGE_MODE,[0]);
+      await send(CMD.SET_ENABLE,[s,HF,1]);
+      await send(CMD.SET_ACTIVE,[s]);
+      await send(CMD.SET_TYPE,[s,NTAG215>>8,NTAG215&0xFF]);
+      await send(CMD.SET_DEFAULT,[s,NTAG215>>8,NTAG215&0xFF]);
+      const pc = (await send(CMD.MF0_PAGES)).data[0];
+      if (pc !== PAGES) throw new Error(`El slot tiene ${pc} páginas y se esperaban ${PAGES}`);
+      await send(CMD.SET_ANTICOLL,[7,...uid,0x44,0x00,0x00,0]);   // UID 7 bytes, ATQA 00 44 (orden de envío 44 00), SAK 00, sin ATS
+      const CH=16;
+      for (let p=0;p<PAGES;p+=CH){
+        const n=Math.min(CH,PAGES-p);
+        await send(CMD.MF0_WRITE,[p,n,...data.subarray(p*4,(p+n)*4)]);
+        render(s, Math.round((p+n)/PAGES*85));
+      }
+      // Verificación: leer lo escrito
+      const back=new Uint8Array(PAGES*4);
+      for (let p=0;p<PAGES;p+=CH){ const n=Math.min(CH,PAGES-p); back.set((await send(CMD.MF0_READ,[p,n])).data.subarray(0,n*4),p*4); }
+      const bad=[]; for (let i=0;i<back.length;i++) if (back[i]!==data[i]) bad.push(i>>2);
+      if (bad.length) throw new Error(`La comprobación falló en las páginas ${[...new Set(bad)].slice(0,6).join(', ')}`);
+      render(s, 92);
+      const ac=(await send(CMD.GET_ANTICOLL)).data; const acUid=ac.slice(1,1+ac[0]);
+      if (window.forge.hexs(acUid,'') !== window.forge.hexs(uid,'')) throw new Error('El UID del slot no coincide con el del amiibo');
+      await send(CMD.SET_NICK,[s,HF,...enc.encode(nickFor(it.name))]);
+      await send(CMD.SAVE,[],{timeout:8000});
+      log(`Slot ${s+1}: ${it.name} cargado, comprobado y guardado`, 'o');
+      window.forge.toast(`${nickFor(it.name)} está en el slot ${s+1}`);
+      slots[s].detail = `UID ${window.forge.hexs(uid,'')} · ID ${it.aid}`;
+    } catch(e){
+      log(`Slot ${s+1}: ${e.message}`, 'e'); window.forge.toast(`No se pudo cargar el slot ${s+1}`);
+    }
+    await refresh();
+  }
+
+  async function activate(s){ setBusy(true,s); try { await send(CMD.SET_ACTIVE,[s]); await send(CMD.SAVE,[],{timeout:8000}); log(`Slot ${s+1} activo`,'o'); } catch(e){ log(e.message,'e'); } await refresh(); }
+
+  async function toggle(s){ const on=!slots[s].hfOn; setBusy(true,s); try { await send(CMD.SET_ENABLE,[s,HF,on?1:0]); await send(CMD.SAVE,[],{timeout:8000}); log(`Slot ${s+1} ${on?'encendido':'apagado'}`,'o'); } catch(e){ log(e.message,'e'); } await refresh(); }
+
+  async function rename(s, name){ setBusy(true,s); try { const n=nickFor(name); await send(CMD.SET_NICK,[s,HF,...enc.encode(n)]); await send(CMD.SAVE,[],{timeout:8000}); log(`Slot ${s+1} renombrado a "${n}"`,'o'); } catch(e){ log(e.message,'e'); } openPanel=null; await refresh(); }
+
+  async function clearSlot(s){
+    setBusy(true,s);
+    try {
+      await send(CMD.DEL_SENSE,[s,HF]);
+      try { await send(CMD.DEL_NICK,[s,HF],{allow:[0x71,0x60]}); } catch {}
+      await send(CMD.SAVE,[],{timeout:8000});
+      slots[s].detail=''; log(`Slot ${s+1} vaciado (HF)`,'o');
+    } catch(e){ log(e.message,'e'); }
+    openPanel=null; await refresh();
+  }
+
+  // Lee el contenido de un slot NTAG215; activa el slot un momento y luego vuelve al que estaba
+  async function readSlot(s, {save=false}={}){
+    const prev = slots.findIndex(x=>x.active);
+    setBusy(true,s,0);
+    try {
+      await send(CMD.SET_ACTIVE,[s]);
+      const pc=(await send(CMD.MF0_PAGES)).data[0];
+      const buf=new Uint8Array(pc*4);
+      for (let p=0;p<pc;p+=16){ const n=Math.min(16,pc-p); buf.set((await send(CMD.MF0_READ,[p,n])).data.subarray(0,n*4),p*4); render(s, Math.round((p+n)/pc*100)); }
+      const ac=(await send(CMD.GET_ANTICOLL)).data; const uid=ac.slice(1,1+ac[0]);
+      const aid = buf.length>=0x5C ? window.forge.hexs(buf.subarray(0x54,0x5C),'') : '';
+      const pwdOk = buf.length===540 && (()=>{ const u=[buf[0],buf[1],buf[2],buf[4],buf[5],buf[6],buf[7]]; return buf[0x214]===(0xAA^u[1]^u[3]) && buf[0x215]===(0x55^u[2]^u[4]) && buf[0x216]===(0xAA^u[3]^u[5]) && buf[0x217]===(0x55^u[4]^u[6]); })();
+      const pageUid = window.forge.hexs([buf[0],buf[1],buf[2],buf[4],buf[5],buf[6],buf[7]],'');
+      const match = window.forge.hexs(uid,'')===pageUid;
+      slots[s].detail = `UID ${window.forge.hexs(uid,'')}${match?'':' ≠ páginas'} · ID ${aid} · contraseña ${pwdOk?'correcta':'falta'}`;
+      log(`Slot ${s+1}: UID ${match?'coincide':'NO coincide'} con las páginas, contraseña ${pwdOk?'correcta':'ausente'}`, match&&pwdOk?'o':'e');
+      if (save){ const name=`slot${s+1}_${nickFor(slots[s].nick||'amiibo')}.bin`; window.forge.download(new Blob([buf],{type:'application/octet-stream'}), name); log(`Copia del slot ${s+1} descargada como ${name}`,'o'); }
+      if (prev>=0 && prev!==s) await send(CMD.SET_ACTIVE,[prev]);
+    } catch(e){ log(`Slot ${s+1}: ${e.message}`,'e'); }
+    await refresh();
+  }
+
+  function render(workSlot=null, pct=null){
+    const it = window.forge?.selected();
+    $('#led').className = 'led' + (port ? (busy?' busy':' on') : '');
+    $('#dev-title').textContent = dev ? dev.model : 'Sin conectar';
+    $('#dev-sub').textContent = dev ? `Firmware ${dev.version}${dev.git?' · '+dev.git:''}` : ('serial' in navigator ? 'Conecta el Chameleon por USB y pulsa Conectar' : 'Este navegador no permite USB: usa Chrome o Edge de escritorio');
+    $('#dev-refresh').disabled = !port || busy;
+    $('#dev-connect').disabled = busy;
+    $('#pick').innerHTML = it?.out
+      ? `<span class="muted">Para cargar:</span> <span class="mono"></span> <span class="muted">UID ${window.forge.hexs(it.uid,'')}</span>${it.example?' <span class="chip example">Ejemplo</span>':''}`
+      : `<span class="muted">Elige un amiibo válido en el banco de trabajo para poder cargarlo.</span>`;
+    if (it?.out) $('#pick .mono').textContent = it.name;
+
+    const body = $('#dev-body');
+    if (!port){
+      body.innerHTML = `<div class="notice"><p><b>Antes de conectar:</b> cierra Chameleon Ultra GUI y cualquier otro programa que use el Chameleon; el puerto USB solo admite una conexión.</p>
+        <p>Al pulsar Conectar, el navegador te pide elegir un puerto. Elige el del Chameleon (en Windows aparece como un puerto COM).</p>
+        <p>La conexión USB solo funciona si abres la página como <span class="mono">http://localhost</span> o por HTTPS, no con la IP del equipo.</p></div>`;
+      return;
+    }
+    body.innerHTML = '<div class="slots-grid"></div>';
+    const grid = body.firstChild;
+    slots.forEach((sl, s) => {
+      const c = document.createElement('div');
+      const empty = !sl.hf;
+      c.className = 'slotc' + (sl.active?' active':'') + (!sl.hfOn && !sl.active ? ' ghost':'');
+      const working = workSlot===s && busy;
+      c.innerHTML = `
+        <div class="slot-top"><span class="slot-num">${s+1}</span>${sl.active?'<span class="slot-badge">Activo</span>':''}</div>
+        <div class="slot-name"></div>
+        <div class="slot-type">${typeName(sl.hf)} · <span class="${sl.hfOn?'on':'off'}">${sl.hfOn?'encendido':'apagado'}</span>${sl.lf?`<br>LF: ${sl.lfOn?'encendido':'apagado'}`:''}</div>
+        ${sl.detail?`<div class="slot-detail"></div>`:''}
+        ${working?`<div class="progress"><i style="width:${pct??30}%"></i></div>`:''}
+        <div class="slot-btns">
+          <button class="sbtn load" data-a="load" ${!it?.out||busy?'disabled':''}>Cargar aquí</button>
+          ${!sl.active&&!empty?`<button class="sbtn" data-a="act" ${busy?'disabled':''}>Activar</button>`:''}
+          ${sl.hf===NTAG215?`<button class="sbtn" data-a="read" ${busy?'disabled':''}>Comprobar</button><button class="sbtn" data-a="save" ${busy?'disabled':''}>Copia .bin</button>`:''}
+          ${!empty?`<button class="sbtn" data-a="tog" ${busy?'disabled':''}>${sl.hfOn?'Apagar':'Encender'}</button><button class="sbtn" data-a="ren" ${busy?'disabled':''}>Renombrar</button><button class="sbtn danger" data-a="clr" ${busy?'disabled':''}>Vaciar</button>`:''}
+        </div>`;
+      c.querySelector('.slot-name').textContent = sl.nick || (empty ? 'Libre' : 'Sin nombre');
+      if (sl.detail) c.querySelector('.slot-detail').textContent = sl.detail;
+      if (openPanel?.slot===s && openPanel.kind==='rename'){
+        const f=document.createElement('form'); f.className='rename';
+        f.innerHTML=`<input id="ren-${s}" maxlength="32" aria-label="Nuevo nombre del slot ${s+1}"><button class="sbtn load" type="submit">Guardar</button>`;
+        f.querySelector('input').value = sl.nick; f.onsubmit = e => { e.preventDefault(); rename(s, f.querySelector('input').value); };
+        c.appendChild(f); setTimeout(()=>f.querySelector('input').focus());
+      }
+      if (openPanel?.slot===s && openPanel.kind==='clear'){
+        const d=document.createElement('div'); d.className='confirm';
+        d.innerHTML=`<span>Se borrará el amiibo de este slot en el Chameleon. Si no tienes copia, pulsa antes “Copia .bin”.</span><div class="slot-btns"><button class="sbtn danger" data-a="clr-yes">Vaciar slot ${s+1}</button><button class="sbtn" data-a="cancel">Cancelar</button></div>`;
+        c.appendChild(d);
+      }
+      c.addEventListener('click', e => {
+        const a = e.target.closest('button')?.dataset.a; if (!a) return;
+        if (a==='load') loadInto(s);
+        else if (a==='act') activate(s);
+        else if (a==='read') readSlot(s);
+        else if (a==='save') readSlot(s,{save:true});
+        else if (a==='tog') toggle(s);
+        else if (a==='ren'){ openPanel={slot:s,kind:'rename'}; render(); }
+        else if (a==='clr'){ openPanel={slot:s,kind:'clear'}; render(); }
+        else if (a==='clr-yes') clearSlot(s);
+        else if (a==='cancel'){ openPanel=null; render(); }
+      });
+      grid.appendChild(c);
+    });
+  }
+
+  $('#dev-connect').onclick = () => port ? disconnect().then(()=>log('Desconectado')) : connect();
+  $('#dev-refresh').onclick = () => refresh();
+  document.addEventListener('forge:select', () => render());
+  if ('serial' in navigator) navigator.serial.addEventListener('disconnect', e => { if (e.target===port){ log('Chameleon desconectado','e'); disconnected(); } });
+  render();
 })();
 </script>
 </body>
